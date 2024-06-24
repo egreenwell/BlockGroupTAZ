@@ -75,19 +75,23 @@ def classify_pop(population):
 #Define file paths and names
 start_time = datetime.now()
 
-base_path = os.path.split(__file__)[0]
+# Original file path
+file_path = r'C:\Users\egreenwell\OneDrive - PlanRVA\Documents\GitHub'
+
+# Get the base path
+base_path = os.path.dirname(file_path)
 output_path = os.path.join(base_path, 'TAZ_BG_Nestings_Output_' + start_time.strftime('%y%m%d%H%M%S'))
 os.mkdir(output_path)
 
-infile = os.path.join(base_path, 'Blk_BG_TAZ_Lookup_SampleInput.csv')
+infile = os.path.join(base_path, 'join_df.csv')
 taz2bg_file = os.path.join(output_path, 'taz2bg.csv')
 bg2taz_file = os.path.join(output_path, 'bg2taz.csv')
 
 print('Reading Input File')
 data = pd.read_csv(infile)
 
-tazs = data['TAZ_10'].value_counts().sort_index().index  #List of TAZs
-bgs = data['BLKGRP10'].value_counts().sort_index().index #List of block groups
+tazs = data['TAZ'].value_counts().sort_index().index  #List of TAZs
+bgs = data['GEOID'].value_counts().sort_index().index #List of block groups
 
 n_t = len(tazs) #Number of TAZs
 n_b = len(bgs)  #Number of block groups
